@@ -212,7 +212,7 @@ const HeroSection = () => {
                 </div>
                 
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.85] tracking-tighter">
-                  <GlitchText className="text-white block">SOFT</GlitchText>
+                  <span className="text-white block">SOFT</span>
                   <span className="text-[#00ff88] block">HAM</span>
                   <span className="text-white/30 text-3xl md:text-4xl font-light tracking-normal block mt-4">SISTEMAS</span>
                 </h1>
@@ -504,7 +504,7 @@ const ClientsSection = () => {
                   <img
                     src={client.url}
                     alt={client.name}
-                    className="max-w-[90%] max-h-[90%] object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                    className="max-w-[90%] max-h-[90%] object-contain opacity-70 group-hover:opacity-100 transition-all duration-500"
                   />
                 </div>
               </div>
