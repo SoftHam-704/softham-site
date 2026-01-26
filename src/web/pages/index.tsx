@@ -836,47 +836,163 @@ const ProcessSection = () => {
   );
 };
 
-// Technologies section
-const technologies = [
-  { name: "Delphi", category: "Backend" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "REST API", category: "Integration" },
-  { name: "Cloud", category: "Infrastructure" },
-  { name: "NFe/NFCe", category: "Fiscal" },
-  { name: "Certificado A1/A3", category: "Security" },
+// Technologies section - Real SoftHam Tech Stack
+interface TechItem {
+  name: string;
+  description: string;
+  highlight?: string;
+}
+
+interface TechCategory {
+  title: string;
+  color: string;
+  borderColor: string;
+  bgColor: string;
+  icon: string;
+  items: TechItem[];
+}
+
+const techStack: TechCategory[] = [
+  {
+    title: "Frontend (Aplicativo Mobile & Web)",
+    color: "text-blue-400",
+    borderColor: "border-blue-500",
+    bgColor: "bg-blue-500/10",
+    icon: "⚛️",
+    items: [
+      { name: "React 19 (TypeScript)", description: "A base de toda a interface, garantindo tipagem forte para evitar erros de código." },
+      { name: "Vite", description: "O motor de build ultrarrápido que usamos para compilar o sistema." },
+      { name: "PWA (Progressive Web App)", description: "Permite que o sistema seja instalado no celular como um aplicativo nativo", highlight: "Vite-PWA + Service Workers" },
+      { name: "TanStack Query (React Query)", description: "Responsável por todo o gerenciamento de dados, cache de API e sincronização inteligente." },
+      { name: "Axios", description: "Para todas as requisições HTTP entre o aplicativo e o servidor." },
+      { name: "Lucide React", description: "A biblioteca de ícones modernos e leves que usamos." },
+      { name: "Framer Motion", description: "Responsável pelas micro-animações e transições suaves entre páginas." },
+    ],
+  },
+  {
+    title: "Backend (API)",
+    color: "text-[#00ff88]",
+    borderColor: "border-[#00ff88]",
+    bgColor: "bg-[#00ff88]/10",
+    icon: "⚙️",
+    items: [
+      { name: "Node.js / Express", description: "O servidor principal que processa todas as rotas e regras de negócio." },
+      { name: "Arquitetura Multi-Tenant", description: "Um sistema que gerencia múltiplos bancos de dados (um para cada empresa/cliente) de forma dinâmica através de headers específicos", highlight: "x-tenant-cnpj" },
+    ],
+  },
+  {
+    title: "Banco de Dados & Infraestrutura",
+    color: "text-orange-400",
+    borderColor: "border-orange-500",
+    bgColor: "bg-orange-500/10",
+    icon: "🗄️",
+    items: [
+      { name: "PostgreSQL", description: "O banco de dados relacional robusto onde as informações de pedidos, clientes e produtos são armazenadas." },
+      { name: "SaveInCloud (Jelastic)", description: "A infraestrutura de nuvem onde o sistema está hospedado, permitindo escalabilidade automática." },
+      { name: "SSL / HTTPS", description: "Camada de segurança obrigatória para criptografia de dados." },
+    ],
+  },
+  {
+    title: "Inteligência & Relatórios",
+    color: "text-purple-400",
+    borderColor: "border-purple-500",
+    bgColor: "bg-purple-500/10",
+    icon: "🧠",
+    items: [
+      { name: "OpenAI API", description: "Integrada para o \"Laboratório de Retenção\" e geração de mensagens inteligentes via WhatsApp." },
+      { name: "Analytics de Curva ABC", description: "Algoritmos em JS/SQL para identificar gaps de mercado e sugerir reposição de estoque (as Campanhas Inteligentes)." },
+    ],
+  },
 ];
 
 const TechnologiesSection = () => {
   const { ref, isVisible } = useIntersectionObserver();
 
   return (
-    <section className="relative py-24 bg-[#050505] overflow-hidden">
-      <div ref={ref} className="relative max-w-6xl mx-auto px-6 lg:px-20">
-        <div className={`flex flex-col lg:flex-row items-center justify-between gap-12 transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-          <div className="lg:w-1/3">
-            <span className="text-[#ff0033] text-xs font-bold tracking-[0.3em] uppercase">// TECNOLOGIAS</span>
-            <h2 className="text-3xl md:text-4xl font-black text-white mt-4 leading-tight tracking-tight">
-              STACK <span className="text-[#00ff88]">ROBUSTO</span>
-            </h2>
-            <p className="text-white/50 mt-4 text-sm">
-              Tecnologias confiáveis e comprovadas que garantem estabilidade e performance.
-            </p>
-          </div>
+    <section className="relative py-32 bg-[#0a0a0a] overflow-hidden">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]" />
+      <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-blue-500/5 to-transparent" />
+      <div className="absolute bottom-0 right-0 w-1/3 h-full bg-gradient-to-l from-purple-500/5 to-transparent" />
 
-          <div className="lg:w-2/3 flex flex-wrap justify-center lg:justify-end gap-3">
-            {technologies.map((tech, index) => (
-              <div
-                key={index}
-                className={`group px-6 py-3 border border-white/10 bg-white/[0.02] hover:border-[#00ff88]/40 hover:bg-[#00ff88]/5 transition-all duration-300 ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-                }`}
-                style={{ transitionDelay: `${index * 50}ms` }}
-              >
-                <div className="text-white font-bold text-sm group-hover:text-[#00ff88] transition-colors">{tech.name}</div>
-                <div className="text-white/30 text-xs">{tech.category}</div>
+      <div ref={ref} className="relative max-w-7xl mx-auto px-6 lg:px-20">
+        {/* Header */}
+        <div className={`mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <span className="text-[#ff0033] text-xs font-bold tracking-[0.3em] uppercase">// TECNOLOGIAS</span>
+          <h2 className="text-4xl md:text-6xl font-black text-white mt-4 leading-[0.9] tracking-tight">
+            NOSSO <span className="text-[#00ff88]">ECOSSISTEMA</span><br/>
+            <span className="text-white/40 text-2xl md:text-3xl font-normal">TÉCNICO</span>
+          </h2>
+          <p className="text-white/50 mt-6 text-lg max-w-2xl">
+            Aqui está o detalhamento técnico do que compõe o ecossistema hoje:
+          </p>
+        </div>
+
+        {/* Tech Categories Grid */}
+        <div className="grid md:grid-cols-2 gap-8">
+          {techStack.map((category, catIndex) => (
+            <div
+              key={category.title}
+              className={`group relative p-6 border border-white/10 ${category.bgColor} hover:border-white/20 transition-all duration-500 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              }`}
+              style={{ transitionDelay: `${catIndex * 150}ms` }}
+            >
+              {/* Category accent bar */}
+              <div className={`absolute left-0 top-0 w-1 h-full ${category.borderColor.replace('border-', 'bg-')}`} />
+              
+              {/* Category header */}
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl">{category.icon}</span>
+                <h3 className={`text-lg font-bold ${category.color}`}>
+                  {category.title}
+                </h3>
               </div>
-            ))}
-          </div>
+
+              {/* Tech items */}
+              <ul className="space-y-4">
+                {category.items.map((item, itemIndex) => (
+                  <li
+                    key={item.name}
+                    className={`transition-all duration-500 ${
+                      isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+                    }`}
+                    style={{ transitionDelay: `${catIndex * 150 + itemIndex * 50}ms` }}
+                  >
+                    <div className="flex items-start gap-2">
+                      <span className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${category.borderColor.replace('border-', 'bg-')}`} />
+                      <div>
+                        <span className="text-white font-semibold">{item.name}:</span>{" "}
+                        <span className="text-white/60 text-sm">
+                          {item.description}
+                          {item.highlight && (
+                            <code className="ml-1 px-1.5 py-0.5 bg-white/10 text-[#00ff88] text-xs font-mono rounded">
+                              {item.highlight}
+                            </code>
+                          )}
+                          {item.name.includes("PWA") && (
+                            <span className="text-white/50">, possibilitando o uso offline.</span>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom tech badges */}
+        <div className={`mt-16 flex flex-wrap justify-center gap-4 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+          {["TypeScript", "React 19", "Node.js", "PostgreSQL", "OpenAI", "PWA"].map((badge) => (
+            <span
+              key={badge}
+              className="px-4 py-2 border border-white/10 bg-white/[0.02] text-white/70 text-sm font-mono hover:border-[#00ff88]/40 hover:text-[#00ff88] transition-all duration-300"
+            >
+              {badge}
+            </span>
+          ))}
         </div>
       </div>
     </section>
