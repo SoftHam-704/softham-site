@@ -3,6 +3,10 @@ import Index from "./pages/index";
 import Sistemas from "./pages/sistemas";
 import Tutoriais from "./pages/tutoriais";
 import Contato from "./pages/contato";
+import SalesMaster from "./pages/salesmaster";
+import EmissorFiscal from "./pages/emissor-fiscal";
+import SalesSpot from "./pages/salesspot";
+import StrudentApp from "./pages/strudent-app";
 import { Provider } from "./components/provider";
 
 function App() {
@@ -13,6 +17,10 @@ function App() {
 				<Route path="/sistemas" component={Sistemas} />
 				<Route path="/tutoriais" component={Tutoriais} />
 				<Route path="/contato" component={Contato} />
+				<Route path="/salesmaster" component={SalesMaster} />
+				<Route path="/emissor-fiscal" component={EmissorFiscal} />
+				<Route path="/salesspot" component={SalesSpot} />
+				<Route path="/strudent-app" component={StrudentApp} />
 			</Switch>
 		</Provider>
 	);

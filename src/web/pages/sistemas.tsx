@@ -27,6 +27,7 @@ const products = [
     color: "#00ff88",
     icon: "🚗",
     featured: false,
+    link: "/salesmaster",
     description: "Sistema desenvolvido especificamente para profissionais que atuam na área de Representação Comercial voltado para o setor de Autopeças (linha leve, pesada e agrícola).",
     features: [
       "Gestão completa de clientes e prospects",
@@ -53,6 +54,7 @@ const products = [
     color: "#ff0033",
     icon: "📄",
     featured: false,
+    link: "/emissor-fiscal",
     description: "Ganhe mais tempo para gerir seu negócio. Emissão de MDFe, CTe, NFe e NFCe nunca foram tão simples. Sistema intuitivo e completo para todas as suas necessidades fiscais.",
     features: [
       "Emissão de NFe (Nota Fiscal Eletrônica)",
@@ -79,6 +81,7 @@ const products = [
     color: "#ffffff",
     icon: "🏪",
     featured: false,
+    link: "/salesspot",
     description: "Sistema voltado para comércio em geral, atendendo às legislações fiscais, com emissor de NFe e NFCe, controle de estoque e financeiro integrados.",
     features: [
       "PDV completo e intuitivo",
@@ -106,6 +109,7 @@ const products = [
     icon: "🎓",
     featured: true,
     isNew: true,
+    link: "/strudent-app",
     description: "Solução completa para gestão escolar desenvolvida para instituições com até 600 alunos. Simplifique o gerenciamento de matrículas, notas, frequência, mensalidades e comunicação com pais. Interface intuitiva que transforma a administração escolar em um processo ágil e eficiente. Controle financeiro integrado, emissão de boletins, relatórios pedagógicos e muito mais em uma única plataforma.",
     features: [
       "Gestão completa de matrículas",
@@ -308,7 +312,7 @@ const ProductCard = ({ product, index }: { product: typeof products[0]; index: n
           {/* CTA */}
           <div className="mt-8 pt-6 border-t border-white/5">
             <Link
-              href="/contato"
+              href={product.link}
               className="inline-flex items-center gap-3 group/btn"
             >
               <span 
