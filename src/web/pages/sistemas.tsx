@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
+import { trackSaibaMaisClick } from "../lib/analytics";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -313,6 +314,10 @@ const ProductCard = ({ product, index }: { product: typeof products[0]; index: n
           <div className="mt-8 pt-6 border-t border-white/5">
             <Link
               href={product.link}
+              onClick={() => trackSaibaMaisClick(product.name)}
+              data-category="Sistemas"
+              data-action-type="click_saiba_mais"
+              data-product-name={product.name}
               className="inline-flex items-center gap-3 group/btn"
             >
               <span 

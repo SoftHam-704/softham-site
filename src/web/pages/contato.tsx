@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
+import { trackFormSubmit, trackWhatsAppClick, trackCTAClick } from "../lib/analytics";
 
 // Observer hook
 const useIntersectionObserver = () => {
@@ -157,6 +158,9 @@ export default function Contato() {
       setErrors(newErrors);
       return;
     }
+
+    // Track form submission
+    trackFormSubmit(formData.sistema || 'geral');
 
     setSubmitted(true);
     setFormData({

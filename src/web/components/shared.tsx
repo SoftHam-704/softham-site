@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
+import { trackWhatsAppClick, trackCTAClick } from "../lib/analytics";
 
 // Floating WhatsApp Button - appears on all pages
 export const FloatingWhatsApp = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isPulsing, setIsPulsing] = useState(true);
+  const [location] = useLocation();
 
   useEffect(() => {
     // Show after scroll
@@ -22,11 +24,19 @@ export const FloatingWhatsApp = () => {
     };
   }, []);
 
+  const handleClick = () => {
+    trackWhatsAppClick(location || 'home');
+  };
+
   return (
     <a
       href="http://wa.me/5567996078885"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleClick}
+      data-category="Contato"
+      data-action-type="click_whatsapp"
+      data-product-name="floating-button"
       className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 transition-all duration-500 ${
         isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
       }`}
@@ -159,6 +169,10 @@ export const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
             href="http://wa.me/5567996078885"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick('mobile-menu')}
+            data-category="Contato"
+            data-action-type="click_whatsapp"
+            data-product-name="mobile-menu"
             className="flex items-center justify-center gap-3 w-full py-4 bg-[#25D366] text-white font-black text-sm tracking-wider hover:bg-[#20bd5a] transition-colors"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -244,6 +258,10 @@ export const NavBar = ({ transparent = false }: { transparent?: boolean }) => {
               href="http://wa.me/5567996078885"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackCTAClick('contato', 'navbar')}
+              data-category="CTA"
+              data-action-type="click_cta"
+              data-product-name="navbar-contato"
               className="hidden md:block relative px-6 py-2.5 bg-[#00ff88] text-[#0a0a0a] font-black text-xs tracking-widest hover:bg-white transition-colors"
               style={{ clipPath: "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)" }}
             >

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
+import { trackVideoClick, trackManualDownload } from "../lib/analytics";
 
 // Observer hook
 const useIntersectionObserver = () => {

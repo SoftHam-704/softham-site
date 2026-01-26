@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar as SharedNavBar, MobileMenu } from "../components/shared";
+import { trackCTAClick, trackSaibaMaisClick } from "../lib/analytics";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
