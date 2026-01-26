@@ -1,48 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
-
-// Custom cursor component
-const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const move = (e: MouseEvent) => setPosition({ x: e.clientX, y: e.clientY });
-    const checkHover = () => {
-      const hovered = document.querySelectorAll(":hover");
-      const isLink = Array.from(hovered).some(
-        (el) => el.tagName === "A" || el.tagName === "BUTTON"
-      );
-      setIsHovering(isLink);
-    };
-
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseover", checkHover);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mouseover", checkHover);
-    };
-  }, []);
-
-  return (
-    <div className="hidden lg:block pointer-events-none fixed inset-0 z-[9999]">
-      <div
-        className="absolute w-4 h-4 -translate-x-1/2 -translate-y-1/2 mix-blend-difference transition-transform duration-100"
-        style={{ left: position.x, top: position.y }}
-      >
-        <div className={`w-full h-full rounded-full bg-white transition-transform duration-200 ${isHovering ? "scale-[3]" : "scale-100"}`} />
-      </div>
-      <div
-        className="absolute w-10 h-10 -translate-x-1/2 -translate-y-1/2 border border-[#00ff88]/50 rounded-full transition-all duration-300"
-        style={{ 
-          left: position.x, 
-          top: position.y,
-          transform: `translate(-50%, -50%) scale(${isHovering ? 1.5 : 1})`,
-        }}
-      />
-    </div>
-  );
-};
+import { FloatingWhatsApp, CustomCursor, NavBar as SharedNavBar, MobileMenu } from "../components/shared";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -96,70 +54,7 @@ const Counter = ({ target, suffix = "" }: { target: number; suffix?: string }) =
   return <span ref={ref}>{count}{suffix}</span>;
 };
 
-// Minimal navigation
-const NavBar = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 100);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-      scrolled ? "py-3" : "py-6"
-    }`}>
-      <div className={`mx-6 lg:mx-12 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-500 ${
-        scrolled ? "bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/5" : ""
-      }`}>
-        <a href="#" className="flex items-center gap-2 group">
-          <span className="text-2xl font-black tracking-tighter">
-            <span className="text-white">SOFT</span>
-            <span className="text-[#00ff88]">HAM</span>
-          </span>
-        </a>
-        
-        <div className="hidden md:flex items-center gap-1">
-          {[
-            { label: "HOME", href: "/", isRoute: true },
-            { label: "SISTEMAS", href: "/sistemas", isRoute: true },
-            { label: "TUTORIAIS", href: "/tutoriais", isRoute: true },
-            { label: "CONTATO", href: "/contato", isRoute: true },
-          ].map((item) => (
-            item.isRoute ? (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="px-4 py-2 text-white/60 hover:text-[#00ff88] transition-colors text-xs font-bold tracking-widest"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <a
-                key={item.label}
-                href={item.href}
-                className="px-4 py-2 text-white/60 hover:text-[#00ff88] transition-colors text-xs font-bold tracking-widest"
-              >
-                {item.label}
-              </a>
-            )
-          ))}
-        </div>
-
-        <a
-          href="http://wa.me/5567996078885"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="relative px-6 py-2.5 bg-[#00ff88] text-[#0a0a0a] font-black text-xs tracking-widest hover:bg-white transition-colors overflow-hidden group"
-          style={{ clipPath: "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)" }}
-        >
-          CONTATO
-        </a>
-      </div>
-    </nav>
-  );
-};
+// NavBar is now imported from shared components
 
 // Hero with split diagonal and code background
 const HeroSection = () => {
@@ -325,6 +220,150 @@ const AboutSection = () => {
               </p>
               <p className="text-2xl text-white font-bold tracking-tight">
                 Entendemos você e suas necessidades.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Company History / Timeline Section
+const timelineEvents = [
+  { year: "1994", title: "Fundação", description: "Início da SoftHam em Campo Grande/MS, focada em soluções para autopeças." },
+  { year: "2000", title: "SalesMasters", description: "Lançamento do sistema para representantes comerciais." },
+  { year: "2010", title: "Emissor Fiscal", description: "Expansão para documentos fiscais eletrônicos (NFe, CTe, MDFe)." },
+  { year: "2015", title: "SalesSpot", description: "Sistema completo para comércio varejista com NFCe." },
+  { year: "2020", title: "100+ Clientes", description: "Marco de mais de 100 empresas atendidas em todo Brasil." },
+  { year: "2024", title: "30 Anos", description: "Três décadas de inovação, confiança e crescimento contínuo." },
+];
+
+const CompanySection = () => {
+  const { ref, isVisible } = useIntersectionObserver();
+
+  return (
+    <section className="relative py-32 bg-[#050505] overflow-hidden">
+      {/* Background patterns */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:80px_80px]" />
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#00ff88]/5 to-transparent" />
+
+      <div ref={ref} className="relative max-w-7xl mx-auto px-6 lg:px-20">
+        {/* Section header */}
+        <div className={`mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <span className="text-[#ff0033] text-xs font-bold tracking-[0.3em] uppercase">// NOSSA HISTÓRIA</span>
+          <h2 className="text-4xl md:text-6xl font-black text-white mt-4 leading-[0.9] tracking-tight">
+            30 ANOS DE<br/>
+            <span className="text-[#00ff88]">EVOLUÇÃO</span>
+          </h2>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-16">
+          {/* Timeline */}
+          <div className={`transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
+            <div className="relative">
+              {/* Vertical line */}
+              <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-[#00ff88] via-[#ff0033] to-white/20" />
+              
+              <div className="space-y-8">
+                {timelineEvents.map((event, index) => (
+                  <div 
+                    key={event.year} 
+                    className="relative pl-12 group"
+                    style={{ transitionDelay: `${index * 100 + 300}ms` }}
+                  >
+                    {/* Dot */}
+                    <div className="absolute left-0 top-1 w-8 h-8 rounded-full border-2 border-[#00ff88] bg-[#050505] flex items-center justify-center group-hover:bg-[#00ff88]/20 transition-all">
+                      <div className="w-2 h-2 rounded-full bg-[#00ff88]" />
+                    </div>
+                    
+                    <div className="group-hover:translate-x-2 transition-transform">
+                      <span className="text-[#00ff88] font-black text-2xl">{event.year}</span>
+                      <h3 className="text-white font-bold text-lg mt-1">{event.title}</h3>
+                      <p className="text-white/50 text-sm mt-1">{event.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Mission, Vision, Values */}
+          <div className={`space-y-8 transition-all duration-1000 delay-400 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
+            {/* Mission */}
+            <div className="p-8 border border-white/10 bg-gradient-to-br from-[#00ff88]/5 to-transparent">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 flex items-center justify-center border border-[#00ff88]/30">
+                  <span className="text-2xl">🎯</span>
+                </div>
+                <h3 className="text-xl font-black text-white">MISSÃO</h3>
+              </div>
+              <p className="text-white/60 leading-relaxed">
+                Desenvolver soluções de software que simplifiquem a gestão empresarial, permitindo que nossos clientes foquem no que realmente importa: crescer seus negócios.
+              </p>
+            </div>
+
+            {/* Vision */}
+            <div className="p-8 border border-white/10 bg-gradient-to-br from-[#ff0033]/5 to-transparent">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 flex items-center justify-center border border-[#ff0033]/30">
+                  <span className="text-2xl">👁️</span>
+                </div>
+                <h3 className="text-xl font-black text-white">VISÃO</h3>
+              </div>
+              <p className="text-white/60 leading-relaxed">
+                Ser referência nacional em sistemas para representação comercial e gestão empresarial, reconhecidos pela qualidade, inovação e atendimento humanizado.
+              </p>
+            </div>
+
+            {/* Values */}
+            <div className="p-8 border border-white/10 bg-gradient-to-br from-white/5 to-transparent">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 flex items-center justify-center border border-white/30">
+                  <span className="text-2xl">💎</span>
+                </div>
+                <h3 className="text-xl font-black text-white">VALORES</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                {["Compromisso", "Inovação", "Transparência", "Parceria", "Qualidade", "Humanização"].map((value, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className="text-[#00ff88]">✓</span>
+                    <span className="text-white/60 text-sm">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="flex items-center gap-6 p-6 border border-white/10">
+              <div className="w-16 h-16 flex items-center justify-center bg-[#00ff88]/10">
+                <span className="text-3xl">📍</span>
+              </div>
+              <div>
+                <h4 className="text-white font-bold">Localização</h4>
+                <p className="text-white/50 text-sm mt-1">
+                  Campo Grande, Mato Grosso do Sul<br/>
+                  Atendimento em todo o Brasil
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Team mention */}
+        <div className={`mt-20 p-8 border border-white/10 bg-white/[0.02] transition-all duration-1000 delay-600 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="flex -space-x-4">
+              {["H", "E", "Q", "U", "I", "P", "E"].map((letter, i) => (
+                <div key={i} className="w-12 h-12 rounded-full bg-gradient-to-br from-[#00ff88]/20 to-[#ff0033]/20 border-2 border-[#0a0a0a] flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">{letter}</span>
+                </div>
+              ))}
+            </div>
+            <div className="text-center md:text-left">
+              <h3 className="text-white font-bold text-lg">Equipe Dedicada</h3>
+              <p className="text-white/50 text-sm mt-1">
+                Profissionais apaixonados por tecnologia, comprometidos em entregar as melhores soluções para seu negócio.
               </p>
             </div>
           </div>
@@ -519,6 +558,330 @@ const ClientsSection = () => {
   );
 };
 
+// Testimonials section
+const testimonials = [
+  {
+    name: "Roberto Almeida",
+    company: "AutoPeças Center MS",
+    text: "Usamos o SalesMasters há 8 anos e revolucionou nossa gestão de representação. O suporte da SoftHam é incomparável, sempre prontos para ajudar.",
+    role: "Diretor Comercial",
+  },
+  {
+    name: "Marina Costa",
+    company: "Distribuidora Sul Peças",
+    text: "A migração para o sistema da SoftHam foi tranquila e o retorno foi imediato. Aumentamos nossa produtividade em 40% no primeiro semestre.",
+    role: "Gerente Administrativa",
+  },
+  {
+    name: "Carlos Henrique",
+    company: "Comércio Bom Preço",
+    text: "O SalesSpot simplificou toda nossa operação de varejo. Emissão de notas, controle de estoque, tudo integrado. Recomendo fortemente.",
+    role: "Proprietário",
+  },
+  {
+    name: "Fernanda Oliveira",
+    company: "Transportadora Rápido MS",
+    text: "O emissor de CTe e MDFe é extremamente intuitivo. Nossa equipe aprendeu rapidamente e os erros de emissão caíram para praticamente zero.",
+    role: "Coord. Fiscal",
+  },
+];
+
+const TestimonialsSection = () => {
+  const { ref, isVisible } = useIntersectionObserver();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section className="relative py-32 bg-[#0a0a0a] overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-[#00ff88] to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,136,0.03)_0%,transparent_70%)]" />
+
+      <div ref={ref} className="relative max-w-6xl mx-auto px-6 lg:px-20">
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <span className="text-[#00ff88] text-xs font-bold tracking-[0.3em] uppercase">// DEPOIMENTOS</span>
+          <h2 className="text-4xl md:text-6xl font-black text-white mt-4 leading-[0.9] tracking-tight">
+            O QUE <span className="text-[#ff0033]">DIZEM</span>
+          </h2>
+        </div>
+
+        {/* Testimonial cards */}
+        <div className={`relative transition-all duration-1000 delay-200 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+          <div className="grid md:grid-cols-2 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className={`group relative p-8 border transition-all duration-500 cursor-pointer ${
+                  activeIndex === index 
+                    ? "border-[#00ff88]/40 bg-[#00ff88]/5" 
+                    : "border-white/5 bg-white/[0.02] hover:border-white/20"
+                }`}
+                onClick={() => setActiveIndex(index)}
+              >
+                {/* Quote mark */}
+                <div className="absolute top-4 right-6 text-6xl text-[#00ff88]/10 font-serif leading-none">"</div>
+                
+                <div className="relative z-10">
+                  <p className="text-white/70 text-lg leading-relaxed mb-6 italic">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#00ff88]/20 to-[#ff0033]/20 flex items-center justify-center">
+                      <span className="text-white font-black text-lg">{testimonial.name[0]}</span>
+                    </div>
+                    <div>
+                      <div className="text-white font-bold">{testimonial.name}</div>
+                      <div className="text-white/40 text-sm">{testimonial.role} • {testimonial.company}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Active indicator */}
+                <div 
+                  className={`absolute bottom-0 left-0 h-1 bg-[#00ff88] transition-all duration-500 ${
+                    activeIndex === index ? "w-full" : "w-0"
+                  }`}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation dots */}
+          <div className="flex justify-center gap-2 mt-8">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  activeIndex === index ? "bg-[#00ff88] w-8" : "bg-white/20 hover:bg-white/40"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Diferenciais / Advantages section
+const diferenciais = [
+  {
+    icon: "🏆",
+    title: "30 Anos de Experiência",
+    description: "Três décadas de expertise no desenvolvimento de soluções para empresas de todos os portes.",
+  },
+  {
+    icon: "🤝",
+    title: "Suporte Personalizado",
+    description: "Atendimento humanizado com técnicos dedicados que conhecem o seu negócio.",
+  },
+  {
+    icon: "🇧🇷",
+    title: "Tecnologia Nacional",
+    description: "Software 100% brasileiro, desenvolvido para atender às legislações e necessidades locais.",
+  },
+  {
+    icon: "🔄",
+    title: "Atualizações Constantes",
+    description: "Sistema sempre atualizado com as últimas mudanças fiscais e melhorias de funcionalidades.",
+  },
+  {
+    icon: "🔒",
+    title: "Segurança de Dados",
+    description: "Seus dados protegidos com backup automático e criptografia de última geração.",
+  },
+  {
+    icon: "💰",
+    title: "Custo-Benefício",
+    description: "Investimento justo com retorno garantido através de aumento de produtividade.",
+  },
+];
+
+const DiferenciaisSection = () => {
+  const { ref, isVisible } = useIntersectionObserver();
+
+  return (
+    <section className="relative py-32 bg-[#050505] overflow-hidden">
+      {/* Grid background */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      
+      <div ref={ref} className="relative max-w-7xl mx-auto px-6 lg:px-20">
+        <div className={`text-center mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <span className="text-[#ff0033] text-xs font-bold tracking-[0.3em] uppercase">// POR QUE NOS ESCOLHER</span>
+          <h2 className="text-4xl md:text-6xl font-black text-white mt-4 leading-[0.9] tracking-tight">
+            NOSSOS <span className="text-[#00ff88]">DIFERENCIAIS</span>
+          </h2>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {diferenciais.map((item, index) => (
+            <div
+              key={index}
+              className={`group relative p-8 border border-white/5 bg-white/[0.02] hover:border-[#00ff88]/30 hover:bg-[#00ff88]/5 transition-all duration-500 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              {/* Icon */}
+              <div className="text-4xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                {item.icon}
+              </div>
+              
+              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#00ff88] transition-colors">
+                {item.title}
+              </h3>
+              <p className="text-white/50 leading-relaxed text-sm">
+                {item.description}
+              </p>
+
+              {/* Corner accent */}
+              <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/10 group-hover:border-[#00ff88]/40 transition-colors" />
+              <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-white/10 group-hover:border-[#00ff88]/40 transition-colors" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Process section
+const processSteps = [
+  {
+    number: "01",
+    title: "Consulta",
+    description: "Analisamos suas necessidades e entendemos os desafios do seu negócio.",
+    color: "#00ff88",
+  },
+  {
+    number: "02",
+    title: "Personalização",
+    description: "Configuramos o sistema de acordo com as especificidades da sua operação.",
+    color: "#fff",
+  },
+  {
+    number: "03",
+    title: "Implementação",
+    description: "Instalação, treinamento da equipe e migração de dados existentes.",
+    color: "#ff0033",
+  },
+  {
+    number: "04",
+    title: "Suporte",
+    description: "Acompanhamento contínuo e suporte técnico dedicado à sua empresa.",
+    color: "#00ff88",
+  },
+];
+
+const ProcessSection = () => {
+  const { ref, isVisible } = useIntersectionObserver();
+
+  return (
+    <section className="relative py-32 bg-[#0a0a0a] overflow-hidden">
+      {/* Horizontal line through steps */}
+      <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent hidden lg:block" />
+      
+      <div ref={ref} className="relative max-w-7xl mx-auto px-6 lg:px-20">
+        <div className={`text-center mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <span className="text-[#00ff88] text-xs font-bold tracking-[0.3em] uppercase">// COMO FUNCIONA</span>
+          <h2 className="text-4xl md:text-6xl font-black text-white mt-4 leading-[0.9] tracking-tight">
+            NOSSO <span className="text-white/20">PROCESSO</span>
+          </h2>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+          {processSteps.map((step, index) => (
+            <div
+              key={index}
+              className={`group relative text-center lg:text-left transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
+            >
+              {/* Number */}
+              <div 
+                className="text-7xl font-black mb-4 transition-all duration-300 group-hover:scale-110"
+                style={{ color: step.color, opacity: 0.3 }}
+              >
+                {step.number}
+              </div>
+              
+              {/* Content */}
+              <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#00ff88] transition-colors">
+                {step.title}
+              </h3>
+              <p className="text-white/50 text-sm leading-relaxed max-w-xs mx-auto lg:mx-0">
+                {step.description}
+              </p>
+
+              {/* Connector arrow - hidden on last item and mobile */}
+              {index < processSteps.length - 1 && (
+                <div className="hidden lg:block absolute top-1/4 -right-2 text-white/20 text-2xl">
+                  →
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Technologies section
+const technologies = [
+  { name: "Delphi", category: "Backend" },
+  { name: "PostgreSQL", category: "Database" },
+  { name: "REST API", category: "Integration" },
+  { name: "Cloud", category: "Infrastructure" },
+  { name: "NFe/NFCe", category: "Fiscal" },
+  { name: "Certificado A1/A3", category: "Security" },
+];
+
+const TechnologiesSection = () => {
+  const { ref, isVisible } = useIntersectionObserver();
+
+  return (
+    <section className="relative py-24 bg-[#050505] overflow-hidden">
+      <div ref={ref} className="relative max-w-6xl mx-auto px-6 lg:px-20">
+        <div className={`flex flex-col lg:flex-row items-center justify-between gap-12 transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+          <div className="lg:w-1/3">
+            <span className="text-[#ff0033] text-xs font-bold tracking-[0.3em] uppercase">// TECNOLOGIAS</span>
+            <h2 className="text-3xl md:text-4xl font-black text-white mt-4 leading-tight tracking-tight">
+              STACK <span className="text-[#00ff88]">ROBUSTO</span>
+            </h2>
+            <p className="text-white/50 mt-4 text-sm">
+              Tecnologias confiáveis e comprovadas que garantem estabilidade e performance.
+            </p>
+          </div>
+
+          <div className="lg:w-2/3 flex flex-wrap justify-center lg:justify-end gap-3">
+            {technologies.map((tech, index) => (
+              <div
+                key={index}
+                className={`group px-6 py-3 border border-white/10 bg-white/[0.02] hover:border-[#00ff88]/40 hover:bg-[#00ff88]/5 transition-all duration-300 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+                }`}
+                style={{ transitionDelay: `${index * 50}ms` }}
+              >
+                <div className="text-white font-bold text-sm group-hover:text-[#00ff88] transition-colors">{tech.name}</div>
+                <div className="text-white/30 text-xs">{tech.category}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // Contact section
 const ContactSection = () => {
   const { ref, isVisible } = useIntersectionObserver();
@@ -632,76 +995,162 @@ const ContactSection = () => {
 
 // Footer
 const Footer = () => {
-  const links = [
-    { label: "HOME", href: "/", isRoute: true },
-    { label: "SISTEMAS", href: "/sistemas", isRoute: true },
-    { label: "TUTORIAIS", href: "/tutoriais", isRoute: true },
-    { label: "CONTATO", href: "/contato", isRoute: true },
+  const siteLinks = [
+    { label: "Home", href: "/", isRoute: true },
+    { label: "Sistemas", href: "/sistemas", isRoute: true },
+    { label: "Tutoriais", href: "/tutoriais", isRoute: true },
+    { label: "Contato", href: "/contato", isRoute: true },
+  ];
+
+  const systemLinks = [
+    { label: "SalesMasters", href: "/sistemas" },
+    { label: "Emissor Fiscal", href: "/sistemas" },
+    { label: "SalesSpot", href: "/sistemas" },
+    { label: "Strudent-App", href: "/sistemas" },
+  ];
+
+  const socialLinks = [
+    { 
+      label: "WhatsApp", 
+      href: "http://wa.me/5567996078885",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      ),
+    },
+    { 
+      label: "YouTube", 
+      href: "https://www.youtube.com/@hamiltonrodrigues7499",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      ),
+    },
+    { 
+      label: "Instagram", 
+      href: "#",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      ),
+    },
   ];
 
   return (
-    <footer className="relative bg-[#0a0a0a] border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6 lg:px-20 py-16">
-        <div className="grid md:grid-cols-3 gap-12 items-start">
-          {/* Logo */}
-          <div>
-            <div className="text-3xl font-black tracking-tighter">
+    <footer className="relative bg-[#050505] border-t border-white/5">
+      {/* Top section with accent */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00ff88]/30 to-transparent" />
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-20 py-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Logo & Description */}
+          <div className="lg:col-span-1">
+            <div className="text-3xl font-black tracking-tighter mb-4">
               <span className="text-white">SOFT</span>
               <span className="text-[#00ff88]">HAM</span>
             </div>
-            <p className="text-white/40 mt-4 text-sm leading-relaxed max-w-xs">
+            <p className="text-white/40 text-sm leading-relaxed mb-6">
               30 anos desenvolvendo soluções de software que transformam negócios em Campo Grande/MS e em todo o Brasil.
             </p>
-          </div>
-
-          {/* Links */}
-          <div className="flex flex-wrap gap-6">
-            {links.map((link) => (
-              link.isRoute ? (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-white/40 hover:text-[#00ff88] transition-colors text-xs font-bold tracking-widest"
-                >
-                  {link.label}
-                </Link>
-              ) : (
+            {/* Social links */}
+            <div className="flex gap-3">
+              {socialLinks.map((social) => (
                 <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-white/40 hover:text-[#00ff88] transition-colors text-xs font-bold tracking-widest"
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 flex items-center justify-center border border-white/10 text-white/40 hover:text-[#00ff88] hover:border-[#00ff88]/40 transition-all"
+                  aria-label={social.label}
                 >
-                  {link.label}
+                  {social.icon}
                 </a>
-              )
-            ))}
+              ))}
+            </div>
           </div>
 
-          {/* Contact */}
-          <div className="flex flex-col items-start md:items-end gap-2">
-            <a href="tel:5567996078885" className="text-white/40 hover:text-[#00ff88] transition-colors text-sm">
-              (67) 9 9607-8885
-            </a>
-            <a href="mailto:hamilton@softham.com.br" className="text-white/40 hover:text-[#00ff88] transition-colors text-sm">
-              hamilton@softham.com.br
-            </a>
-            <a
-              href="https://www.youtube.com/@hamiltonrodrigues7499"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/40 hover:text-[#ff0033] transition-colors text-sm"
-            >
-              YouTube
-            </a>
+          {/* Navigation */}
+          <div>
+            <h4 className="text-white font-bold text-xs tracking-widest mb-6 uppercase">Navegação</h4>
+            <ul className="space-y-3">
+              {siteLinks.map((link) => (
+                <li key={link.label}>
+                  {link.isRoute ? (
+                    <Link
+                      href={link.href}
+                      className="text-white/40 hover:text-[#00ff88] transition-colors text-sm flex items-center gap-2 group"
+                    >
+                      <span className="w-0 group-hover:w-2 h-px bg-[#00ff88] transition-all" />
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-white/40 hover:text-[#00ff88] transition-colors text-sm flex items-center gap-2 group"
+                    >
+                      <span className="w-0 group-hover:w-2 h-px bg-[#00ff88] transition-all" />
+                      {link.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Systems */}
+          <div>
+            <h4 className="text-white font-bold text-xs tracking-widest mb-6 uppercase">Sistemas</h4>
+            <ul className="space-y-3">
+              {systemLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-white/40 hover:text-[#00ff88] transition-colors text-sm flex items-center gap-2 group"
+                  >
+                    <span className="w-0 group-hover:w-2 h-px bg-[#00ff88] transition-all" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-white font-bold text-xs tracking-widest mb-6 uppercase">Contato</h4>
+            <ul className="space-y-4">
+              <li>
+                <a href="tel:5567996078885" className="text-white/60 hover:text-[#00ff88] transition-colors text-sm flex items-start gap-3">
+                  <span className="text-[#00ff88]">📞</span>
+                  <span>(67) 9 9607-8885</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:hamilton@softham.com.br" className="text-white/60 hover:text-[#00ff88] transition-colors text-sm flex items-start gap-3">
+                  <span className="text-[#00ff88]">✉️</span>
+                  <span>hamilton@softham.com.br</span>
+                </a>
+              </li>
+              <li className="text-white/40 text-sm flex items-start gap-3">
+                <span className="text-[#00ff88]">📍</span>
+                <span>Campo Grande, MS<br/>Brasil</span>
+              </li>
+            </ul>
           </div>
         </div>
 
+        {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/30 text-xs tracking-wider">
             © {new Date().getFullYear()} SOFTHAM SISTEMAS — TODOS OS DIREITOS RESERVADOS
           </p>
-          <div className="text-white/30 text-xs tracking-wider">
-            CAMPO GRANDE/MS
+          <div className="flex items-center gap-6">
+            <span className="text-white/30 text-xs tracking-wider">CNPJ: 00.000.000/0001-00</span>
+            <span className="text-white/20">|</span>
+            <span className="text-white/30 text-xs tracking-wider">CAMPO GRANDE/MS</span>
           </div>
         </div>
       </div>
@@ -776,13 +1225,19 @@ function Index() {
         }
       `}</style>
       <CustomCursor />
-      <NavBar />
+      <SharedNavBar transparent />
       <HeroSection />
       <AboutSection />
+      <CompanySection />
+      <DiferenciaisSection />
       <ServicesSection />
+      <ProcessSection />
+      <TestimonialsSection />
       <ClientsSection />
+      <TechnologiesSection />
       <ContactSection />
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }

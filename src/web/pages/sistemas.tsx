@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
+import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,96 +16,6 @@ const useIntersectionObserver = (options = {}) => {
   }, []);
 
   return { ref, isVisible };
-};
-
-// Custom cursor
-const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const move = (e: MouseEvent) => setPosition({ x: e.clientX, y: e.clientY });
-    const checkHover = () => {
-      const hovered = document.querySelectorAll(":hover");
-      const isLink = Array.from(hovered).some(
-        (el) => el.tagName === "A" || el.tagName === "BUTTON"
-      );
-      setIsHovering(isLink);
-    };
-
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseover", checkHover);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mouseover", checkHover);
-    };
-  }, []);
-
-  return (
-    <div className="hidden lg:block pointer-events-none fixed inset-0 z-[9999]">
-      <div
-        className="absolute w-4 h-4 -translate-x-1/2 -translate-y-1/2 mix-blend-difference transition-transform duration-100"
-        style={{ left: position.x, top: position.y }}
-      >
-        <div className={`w-full h-full rounded-full bg-white transition-transform duration-200 ${isHovering ? "scale-[3]" : "scale-100"}`} />
-      </div>
-    </div>
-  );
-};
-
-// Navigation
-const NavBar = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 100);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-      scrolled ? "py-3" : "py-6"
-    }`}>
-      <div className={`mx-6 lg:mx-12 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-500 ${
-        scrolled ? "bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/5" : ""
-      }`}>
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-2xl font-black tracking-tighter">
-            <span className="text-white">SOFT</span>
-            <span className="text-[#00ff88]">HAM</span>
-          </span>
-        </Link>
-        
-        <div className="hidden md:flex items-center gap-1">
-          {[
-            { label: "HOME", href: "/" },
-            { label: "SISTEMAS", href: "/sistemas" },
-            { label: "TUTORIAIS", href: "/tutoriais" },
-            { label: "CONTATO", href: "/contato" },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="px-4 py-2 text-white/60 hover:text-[#00ff88] transition-colors text-xs font-bold tracking-widest"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-
-        <a
-          href="http://wa.me/5567996078885"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="relative px-6 py-2.5 bg-[#00ff88] text-[#0a0a0a] font-black text-xs tracking-widest hover:bg-white transition-colors"
-          style={{ clipPath: "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)" }}
-        >
-          WHATSAPP
-        </a>
-      </div>
-    </nav>
-  );
 };
 
 const products = [
@@ -576,6 +487,7 @@ export default function Sistemas() {
       <CTASection />
       
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }
