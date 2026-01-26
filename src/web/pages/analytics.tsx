@@ -128,9 +128,15 @@ export default function Analytics() {
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="max-w-md w-full mx-4">
           <div className="text-center mb-8">
-            <Link href="/" className="inline-block text-3xl font-black tracking-tighter">
-              <span className="text-white">SOFT</span>
-              <span className="text-[#00ff88]">HAM</span>
+            <Link href="/" className="inline-flex flex-col items-center">
+              <img 
+                src="./logo.png" 
+                alt="SoftHam Sistemas" 
+                className="h-16 w-auto object-contain"
+              />
+              <span className="text-white/60 text-[10px] font-bold tracking-[0.3em] mt-1">
+                SISTEMAS
+              </span>
             </Link>
             <p className="text-white/40 mt-2">Analytics Dashboard</p>
           </div>
@@ -175,9 +181,15 @@ export default function Analytics() {
       <header className="border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/" className="text-2xl font-black tracking-tighter">
-              <span className="text-white">SOFT</span>
-              <span className="text-[#00ff88]">HAM</span>
+            <Link href="/" className="flex flex-col items-start">
+              <img 
+                src="./logo.png" 
+                alt="SoftHam Sistemas" 
+                className="h-10 w-auto object-contain"
+              />
+              <span className="text-white/60 text-[9px] font-bold tracking-[0.3em] mt-0.5">
+                SISTEMAS
+              </span>
             </Link>
             <span className="text-white/40 text-sm">/ Analytics Dashboard</span>
           </div>

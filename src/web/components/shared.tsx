@@ -2,6 +2,39 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { trackWhatsAppClick, trackCTAClick } from "../lib/analytics";
 
+// Reusable Logo Component
+export const Logo = ({ 
+  size = "default", 
+  showSubtitle = false,
+  className = "" 
+}: { 
+  size?: "small" | "default" | "large" | "footer";
+  showSubtitle?: boolean;
+  className?: string;
+}) => {
+  const sizeClasses = {
+    small: "h-8 md:h-9",
+    default: "h-10 md:h-12",
+    large: "h-14 md:h-16",
+    footer: "h-12 md:h-14"
+  };
+
+  return (
+    <div className={`flex flex-col items-start ${className}`}>
+      <img 
+        src="./logo.png" 
+        alt="SoftHam Sistemas" 
+        className={`${sizeClasses[size]} w-auto object-contain transition-transform duration-300 hover:scale-105`}
+      />
+      {showSubtitle && (
+        <span className="text-white/60 text-[10px] md:text-xs font-bold tracking-[0.3em] mt-1">
+          SISTEMAS
+        </span>
+      )}
+    </div>
+  );
+};
+
 // Floating WhatsApp Button - appears on all pages
 export const FloatingWhatsApp = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -127,9 +160,8 @@ export const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
 
         {/* Logo */}
         <div className="pt-8 px-8">
-          <Link href="/" onClick={onClose} className="text-2xl font-black tracking-tighter">
-            <span className="text-white">SOFT</span>
-            <span className="text-[#00ff88]">HAM</span>
+          <Link href="/" onClick={onClose} className="block">
+            <Logo size="default" showSubtitle />
           </Link>
         </div>
 
@@ -228,10 +260,7 @@ export const NavBar = ({ transparent = false }: { transparent?: boolean }) => {
           scrolled || !transparent ? "bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/5" : ""
         }`}>
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-xl lg:text-2xl font-black tracking-tighter">
-              <span className="text-white">SOFT</span>
-              <span className="text-[#00ff88]">HAM</span>
-            </span>
+            <Logo size="small" showSubtitle />
           </Link>
           
           {/* Desktop menu */}

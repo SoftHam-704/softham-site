@@ -1165,9 +1165,15 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Logo & Description */}
           <div className="lg:col-span-1">
-            <div className="text-3xl font-black tracking-tighter mb-4">
-              <span className="text-white">SOFT</span>
-              <span className="text-[#00ff88]">HAM</span>
+            <div className="mb-4">
+              <img 
+                src="./logo.png" 
+                alt="SoftHam Sistemas" 
+                className="h-14 w-auto object-contain"
+              />
+              <span className="text-white/60 text-[10px] font-bold tracking-[0.3em] mt-1 block">
+                SISTEMAS
+              </span>
             </div>
             <p className="text-white/40 text-sm leading-relaxed mb-6">
               30 anos desenvolvendo soluções de software que transformam negócios em Campo Grande/MS e em todo o Brasil.

@@ -606,9 +606,15 @@ const Footer = () => (
   <footer className="py-12 border-t border-white/5">
     <div className="max-w-7xl mx-auto px-6 lg:px-20">
       <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-        <Link href="/" className="text-xl font-black tracking-tighter">
-          <span className="text-white">SOFT</span>
-          <span className="text-[#00ff88]">HAM</span>
+        <Link href="/" className="flex flex-col items-center md:items-start">
+          <img 
+            src="./logo.png" 
+            alt="SoftHam Sistemas" 
+            className="h-10 w-auto object-contain hover:scale-105 transition-transform"
+          />
+          <span className="text-white/60 text-[9px] font-bold tracking-[0.3em] mt-1">
+            SISTEMAS
+          </span>
         </Link>
         <nav className="flex flex-wrap justify-center gap-6">
           <Link href="/" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Home</Link>
