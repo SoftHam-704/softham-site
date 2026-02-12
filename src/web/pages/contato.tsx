@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
 import { trackFormSubmit, trackWhatsAppClick, trackCTAClick } from "../lib/analytics";
+import { Phone, Mail, MapPin } from "lucide-react";
 
 // Observer hook
 const useIntersectionObserver = () => {
@@ -291,7 +292,7 @@ export default function Contato() {
             <div className="grid gap-4">
               <a href="tel:5567996078885" className="group flex items-center gap-4 p-4 border border-white/10 hover:border-[#00ff88]/30 transition-all">
                 <div className="w-12 h-12 flex items-center justify-center border border-white/20 group-hover:border-[#00ff88] transition-all">
-                  <span className="text-2xl">📞</span>
+                  <Phone className="w-6 h-6 text-[#00ff88]" strokeWidth={1.5} />
                 </div>
                 <div>
                   <h3 className="text-white font-bold group-hover:text-[#00ff88] transition-colors">Telefone</h3>
@@ -301,7 +302,7 @@ export default function Contato() {
 
               <a href="mailto:hamilton@softham.com.br" className="group flex items-center gap-4 p-4 border border-white/10 hover:border-[#00ff88]/30 transition-all">
                 <div className="w-12 h-12 flex items-center justify-center border border-white/20 group-hover:border-[#00ff88] transition-all">
-                  <span className="text-2xl">✉️</span>
+                  <Mail className="w-6 h-6 text-[#00ff88]" strokeWidth={1.5} />
                 </div>
                 <div>
                   <h3 className="text-white font-bold group-hover:text-[#00ff88] transition-colors">E-mail</h3>
@@ -545,7 +546,7 @@ export default function Contato() {
               <div className="p-6 border border-white/10">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 flex items-center justify-center bg-[#00ff88]/10">
-                    <span className="text-2xl">📍</span>
+                    <MapPin className="w-6 h-6 text-[#00ff88]" strokeWidth={1.5} />
                   </div>
                   <div>
                     <h3 className="text-white font-bold">Endereço</h3>

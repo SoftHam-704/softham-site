@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
 import { trackCTAClick, trackVideoClick, trackTabNavigation } from "../lib/analytics";
+import { FileText, Zap, CheckCircle, RefreshCw, Shield } from "lucide-react";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,7 +26,6 @@ const systemData = {
   subtitle: "Documentos Fiscais",
   tagline: "Emita NFe, NFCe, CTe e MDFe sem complicação",
   color: "#ff0033",
-  icon: "📄",
   description: "Ganhe mais tempo para gerir seu negócio. Emissão de MDFe, CTe, NFe e NFCe nunca foram tão simples. Sistema intuitivo e completo para todas as suas necessidades fiscais, com atualização automática conforme as mudanças na legislação.",
   features: [
     { title: "NFe - Nota Fiscal Eletrônica", desc: "Emissão completa de notas fiscais para vendas de produtos e mercadorias" },
@@ -42,10 +42,10 @@ const systemData = {
     { title: "Multi-empresa", desc: "Gerencie múltiplas empresas e filiais em um único sistema" },
   ],
   benefits: [
-    { icon: "⚡", title: "Emissão Rápida", desc: "Emita documentos em segundos, não minutos" },
-    { icon: "✅", title: "100% Legal", desc: "Sempre atualizado com a legislação vigente" },
-    { icon: "🔄", title: "Atualizações Gratuitas", desc: "Todas as mudanças fiscais sem custo extra" },
-    { icon: "🛡️", title: "Dados Seguros", desc: "Backup automático de todos os XMLs" },
+    { IconComponent: Zap, title: "Emissão Rápida", desc: "Emita documentos em segundos, não minutos" },
+    { IconComponent: CheckCircle, title: "100% Legal", desc: "Sempre atualizado com a legislação vigente" },
+    { IconComponent: RefreshCw, title: "Atualizações Gratuitas", desc: "Todas as mudanças fiscais sem custo extra" },
+    { IconComponent: Shield, title: "Dados Seguros", desc: "Backup automático de todos os XMLs" },
   ],
   tutorials: [
     { id: 1, title: "Como Emitir sua Primeira NFe", category: "NFe" },
@@ -174,7 +174,9 @@ const HeroSection = () => {
                   {/* DANFE header */}
                   <div className="p-4 border-b border-gray-200">
                     <div className="flex items-center justify-between">
-                      <div className="w-12 h-12 bg-[#ff0033]/10 rounded flex items-center justify-center text-2xl">📄</div>
+                      <div className="w-12 h-12 bg-[#ff0033]/10 rounded flex items-center justify-center">
+                        <FileText className="w-6 h-6 text-[#ff0033]" strokeWidth={1.5} />
+                      </div>
                       <div className="text-right">
                         <div className="text-[8px] text-gray-400 font-bold">DANFE</div>
                         <div className="text-[10px] text-[#ff0033] font-black">NFe</div>
@@ -338,7 +340,7 @@ const BenefitsSection = () => {
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <span className="text-4xl mb-4 block">{benefit.icon}</span>
+                <benefit.IconComponent className="w-10 h-10 text-[#ff0033] mb-4" strokeWidth={1.5} />
                 <h3 className="text-white font-bold mb-2">{benefit.title}</h3>
                 <p className="text-white/40 text-sm">{benefit.desc}</p>
               </div>

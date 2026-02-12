@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
 import { trackCTAClick, trackVideoClick, trackTabNavigation } from "../lib/analytics";
+import { Car, Zap, Brain, BarChart3, History, Target, Check } from "lucide-react";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,40 +20,43 @@ const useIntersectionObserver = (options = {}) => {
   return { ref, isVisible };
 };
 
-// Pillar Data
+// Pillar Data - Using Lucide React icons
+const pillarIcons = {
+  "01": Zap,
+  "02": Brain,
+  "03": BarChart3,
+  "04": History,
+  "05": Target,
+};
+
 const pillars = [
   {
     number: "01",
     title: "Precisão Cirúrgica em Cálculos Complexos",
-    icon: "⚡",
     text: "Esqueça a dor de cabeça com IPI e Substituição Tributária (ST). Nosso sistema processa complexidades tributárias em milissegundos. Gere PDFs profissionais, detalhados e com cálculo exato de impostos, adaptados para o modelo de relatório que sua indústria exige (Modelos 3, 9, 12, 13 ou 14). Transmita confiança e autoridade em cada cotação.",
     gradient: "from-[#00ff88]/20 to-[#00ff88]/5"
   },
   {
     number: "02",
     title: "IA Insight: Sua Inteligência Própria de Recuperação",
-    icon: "🧠",
     text: "O SalesMasters não apenas armazena dados; ele pensa por você. Nossa Inteligência Artificial analisa o comportamento de compra da sua carteira em tempo real. Ela te avisa exatamente quem parou de comprar, quem diminuiu a frequência e, mais importante: identifica a Receita Potencial acumulada em orçamentos perdidos. Você nunca mais deixará dinheiro na mesa por falta de acompanhamento.",
     gradient: "from-purple-500/20 to-purple-500/5"
   },
   {
     number: "03",
     title: "Visão 360º de Sell-Out e Performance",
-    icon: "📊",
     text: "Tenha o controle total do giro dos seus produtos no PDV. Através de dashboards dinâmicos, visualize o faturamento por indústria, compare o desempenho entre segmentos e aplique o Princípio de Pareto para focar seus esforços nos 20% de clientes que geram 80% do seu lucro.",
     gradient: "from-cyan-500/20 to-cyan-500/5"
   },
   {
     number: "04",
     title: "O Poder do Histórico Chronos (5 Anos)",
-    icon: "⏳",
     text: 'Decisões baseadas no "acho que..." são perigosas. Com o SalesMasters, você tem acesso a uma análise cronológica profunda de até 5 anos. Entenda a sazonalidade do mercado agrícola, as oscilações da linha pesada e os picos da linha leve com uma clareza que nenhum Excel consegue entregar.',
     gradient: "from-orange-500/20 to-orange-500/5"
   },
   {
     number: "05",
     title: "O Centro de Operações Digital",
-    icon: "🎯",
     text: "Envio de Emails Estratégicos: Segmente sua comunicação por área de atuação, produtos ou aniversários. Catálogo Digital Integrado: Apresente seus fornecedores com o brilho que eles merecem. Agenda Inteligente: Otimize sua rota de visitas com base na lucratividade e na urgência de atendimento.",
     gradient: "from-[#ff0033]/20 to-[#ff0033]/5"
   }
@@ -140,7 +144,7 @@ const HeroManifesto = () => {
           <div className={`inline-flex items-center gap-3 mb-8 transform transition-all duration-700 ${
             isVisible ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"
           }`}>
-            <span className="text-5xl">🚗</span>
+            <Car className="w-10 h-10 text-[#00ff88]" strokeWidth={1.5} />
             <div className="h-px w-12 bg-[#00ff88]" />
             <span className="text-[#00ff88] text-xs font-black tracking-[0.3em] uppercase">
               REPRESENTAÇÃO COMERCIAL
@@ -148,7 +152,7 @@ const HeroManifesto = () => {
           </div>
 
           {/* Main Title */}
-          <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-[0.85] tracking-tighter transform transition-all duration-1000 ${
+          <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.85] tracking-tighter transform transition-all duration-1000 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
           }`}>
             <span className="text-white">DOMINE O</span>
@@ -166,7 +170,7 @@ const HeroManifesto = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className={`text-xl md:text-2xl lg:text-3xl text-white/60 mt-10 max-w-2xl leading-relaxed font-light transform transition-all duration-1000 delay-200 ${
+          <p className={`text-lg md:text-xl lg:text-2xl text-white/60 mt-10 max-w-2xl leading-relaxed font-light transform transition-all duration-1000 delay-200 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}>
             Onde a <span className="text-white font-medium">Tradição da Representação</span> se une ao{" "}
@@ -320,7 +324,10 @@ const PillarsSection = () => {
                   <span className="text-7xl font-black text-white/[0.03] group-hover:text-white/[0.06] transition-colors">
                     {pillar.number}
                   </span>
-                  <span className="text-4xl transform group-hover:scale-110 transition-transform">{pillar.icon}</span>
+                  {(() => {
+                    const IconComponent = pillarIcons[pillar.number as keyof typeof pillarIcons];
+                    return <IconComponent className="w-10 h-10 text-[#00ff88] transform group-hover:scale-110 transition-transform" strokeWidth={1.5} />;
+                  })()}
                 </div>
                 <div className="w-12 h-12 border border-[#00ff88]/20 flex items-center justify-center text-[#00ff88] font-black text-sm group-hover:bg-[#00ff88] group-hover:text-[#0a0a0a] transition-all">
                   {pillar.number}
@@ -380,15 +387,15 @@ const DifferentiatorSection = () => {
 
             <div className="flex flex-wrap gap-4 mt-10">
               <div className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10">
-                <span className="text-[#00ff88]">✓</span>
+                <Check className="w-4 h-4 text-[#00ff88]" strokeWidth={2} />
                 <span className="text-white/60 text-sm">Linha Leve</span>
               </div>
               <div className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10">
-                <span className="text-[#00ff88]">✓</span>
+                <Check className="w-4 h-4 text-[#00ff88]" strokeWidth={2} />
                 <span className="text-white/60 text-sm">Linha Pesada</span>
               </div>
               <div className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10">
-                <span className="text-[#00ff88]">✓</span>
+                <Check className="w-4 h-4 text-[#00ff88]" strokeWidth={2} />
                 <span className="text-white/60 text-sm">Linha Agrícola</span>
               </div>
             </div>
@@ -481,7 +488,7 @@ const DifferentiatorSection = () => {
               <div className="absolute -top-4 -right-4 p-4 bg-[#0a0a0a] border border-[#00ff88]/30 rounded-lg shadow-xl animate-pulse">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#00ff88]/20 rounded-full flex items-center justify-center">
-                    <span className="text-[#00ff88]">🧠</span>
+                    <Brain className="w-5 h-5 text-[#00ff88]" strokeWidth={1.5} />
                   </div>
                   <div>
                     <div className="text-white text-xs font-bold">IA Insight</div>

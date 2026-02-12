@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar as SharedNavBar, MobileMenu } from "../components/shared";
 import { trackCTAClick } from "../lib/analytics";
+import { Target, Eye, Gem, MapPin, Atom, Cog, Database, Brain, Check, Mail, Phone, Trophy, Users, Flag, RefreshCw, Lock, DollarSign } from "lucide-react";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -295,7 +296,7 @@ const CompanySection = () => {
             <div className="p-8 border border-white/10 bg-gradient-to-br from-[#00ff88]/5 to-transparent">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 flex items-center justify-center border border-[#00ff88]/30">
-                  <span className="text-2xl">🎯</span>
+                  <Target className="w-6 h-6 text-[#00ff88]" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-xl font-black text-white">MISSÃO</h3>
               </div>
@@ -308,7 +309,7 @@ const CompanySection = () => {
             <div className="p-8 border border-white/10 bg-gradient-to-br from-[#ff0033]/5 to-transparent">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 flex items-center justify-center border border-[#ff0033]/30">
-                  <span className="text-2xl">👁️</span>
+                  <Eye className="w-6 h-6 text-[#ff0033]" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-xl font-black text-white">VISÃO</h3>
               </div>
@@ -321,14 +322,14 @@ const CompanySection = () => {
             <div className="p-8 border border-white/10 bg-gradient-to-br from-white/5 to-transparent">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 flex items-center justify-center border border-white/30">
-                  <span className="text-2xl">💎</span>
+                  <Gem className="w-6 h-6 text-white" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-xl font-black text-white">VALORES</h3>
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4">
                 {["Compromisso", "Inovação", "Transparência", "Parceria", "Qualidade", "Humanização"].map((value, i) => (
                   <div key={i} className="flex items-center gap-2">
-                    <span className="text-[#00ff88]">✓</span>
+                    <Check className="w-4 h-4 text-[#00ff88]" strokeWidth={2} />
                     <span className="text-white/60 text-sm">{value}</span>
                   </div>
                 ))}
@@ -338,7 +339,7 @@ const CompanySection = () => {
             {/* Location */}
             <div className="flex items-center gap-6 p-6 border border-white/10">
               <div className="w-16 h-16 flex items-center justify-center bg-[#00ff88]/10">
-                <span className="text-3xl">📍</span>
+                <MapPin className="w-8 h-8 text-[#00ff88]" strokeWidth={1.5} />
               </div>
               <div>
                 <h4 className="text-white font-bold">Localização</h4>
@@ -680,32 +681,32 @@ const TestimonialsSection = () => {
 // Diferenciais / Advantages section
 const diferenciais = [
   {
-    icon: "🏆",
+    IconComponent: Trophy,
     title: "30 Anos de Experiência",
     description: "Três décadas de expertise no desenvolvimento de soluções para empresas de todos os portes.",
   },
   {
-    icon: "🤝",
+    IconComponent: Users,
     title: "Suporte Personalizado",
     description: "Atendimento humanizado com técnicos dedicados que conhecem o seu negócio.",
   },
   {
-    icon: "🇧🇷",
+    IconComponent: Flag,
     title: "Tecnologia Nacional",
     description: "Software 100% brasileiro, desenvolvido para atender às legislações e necessidades locais.",
   },
   {
-    icon: "🔄",
+    IconComponent: RefreshCw,
     title: "Atualizações Constantes",
     description: "Sistema sempre atualizado com as últimas mudanças fiscais e melhorias de funcionalidades.",
   },
   {
-    icon: "🔒",
+    IconComponent: Lock,
     title: "Segurança de Dados",
     description: "Seus dados protegidos com backup automático e criptografia de última geração.",
   },
   {
-    icon: "💰",
+    IconComponent: DollarSign,
     title: "Custo-Benefício",
     description: "Investimento justo com retorno garantido através de aumento de produtividade.",
   },
@@ -737,8 +738,8 @@ const DiferenciaisSection = () => {
               style={{ transitionDelay: `${index * 100}ms` }}
             >
               {/* Icon */}
-              <div className="text-4xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                {item.icon}
+              <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
+                <item.IconComponent className="w-10 h-10 text-[#00ff88]" strokeWidth={1.5} />
               </div>
               
               <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#00ff88] transition-colors">
@@ -854,7 +855,7 @@ interface TechCategory {
   color: string;
   borderColor: string;
   bgColor: string;
-  icon: string;
+  IconComponent: React.ElementType;
   items: TechItem[];
 }
 
@@ -864,7 +865,7 @@ const techStack: TechCategory[] = [
     color: "text-blue-400",
     borderColor: "border-blue-500",
     bgColor: "bg-blue-500/10",
-    icon: "⚛️",
+    IconComponent: Atom,
     items: [
       { name: "React 19 (TypeScript)", description: "A base de toda a interface, garantindo tipagem forte para evitar erros de código." },
       { name: "Vite", description: "O motor de build ultrarrápido que usamos para compilar o sistema." },
@@ -880,7 +881,7 @@ const techStack: TechCategory[] = [
     color: "text-[#00ff88]",
     borderColor: "border-[#00ff88]",
     bgColor: "bg-[#00ff88]/10",
-    icon: "⚙️",
+    IconComponent: Cog,
     items: [
       { name: "Node.js / Express", description: "O servidor principal que processa todas as rotas e regras de negócio." },
       { name: "Arquitetura Multi-Tenant", description: "Um sistema que gerencia múltiplos bancos de dados (um para cada empresa/cliente) de forma dinâmica através de headers específicos", highlight: "x-tenant-cnpj" },
@@ -891,7 +892,7 @@ const techStack: TechCategory[] = [
     color: "text-orange-400",
     borderColor: "border-orange-500",
     bgColor: "bg-orange-500/10",
-    icon: "🗄️",
+    IconComponent: Database,
     items: [
       { name: "PostgreSQL", description: "O banco de dados relacional robusto onde as informações de pedidos, clientes e produtos são armazenadas." },
       { name: "SaveInCloud (Jelastic)", description: "A infraestrutura de nuvem onde o sistema está hospedado, permitindo escalabilidade automática." },
@@ -903,7 +904,7 @@ const techStack: TechCategory[] = [
     color: "text-purple-400",
     borderColor: "border-purple-500",
     bgColor: "bg-purple-500/10",
-    icon: "🧠",
+    IconComponent: Brain,
     items: [
       { name: "OpenAI API", description: "Integrada para o \"Laboratório de Retenção\" e geração de mensagens inteligentes via WhatsApp." },
       { name: "Analytics de Curva ABC", description: "Algoritmos em JS/SQL para identificar gaps de mercado e sugerir reposição de estoque (as Campanhas Inteligentes)." },
@@ -949,7 +950,7 @@ const TechnologiesSection = () => {
               
               {/* Category header */}
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl">{category.icon}</span>
+                <category.IconComponent className={`w-6 h-6 ${category.color}`} strokeWidth={1.5} />
                 <h3 className={`text-lg font-bold ${category.color}`}>
                   {category.title}
                 </h3>
@@ -1045,13 +1046,13 @@ const ContactSection = () => {
             <div className="mt-12 space-y-4">
               <a href="tel:5567996078885" className="flex items-center gap-4 text-white/60 hover:text-[#00ff88] transition-colors group">
                 <div className="w-12 h-12 border border-white/10 group-hover:border-[#00ff88] flex items-center justify-center transition-colors">
-                  <span className="text-lg">📞</span>
+                  <Phone className="w-5 h-5" strokeWidth={1.5} />
                 </div>
                 <span className="font-bold">(67) 9 9607-8885</span>
               </a>
               <a href="mailto:hamilton@softham.com.br" className="flex items-center gap-4 text-white/60 hover:text-[#00ff88] transition-colors group">
                 <div className="w-12 h-12 border border-white/10 group-hover:border-[#00ff88] flex items-center justify-center transition-colors">
-                  <span className="text-lg">✉️</span>
+                  <Mail className="w-5 h-5" strokeWidth={1.5} />
                 </div>
                 <span className="font-bold">hamilton@softham.com.br</span>
               </a>
@@ -1252,18 +1253,18 @@ const Footer = () => {
             <ul className="space-y-4">
               <li>
                 <a href="tel:5567996078885" className="text-white/60 hover:text-[#00ff88] transition-colors text-sm flex items-start gap-3">
-                  <span className="text-[#00ff88]">📞</span>
+                  <Phone className="w-4 h-4 text-[#00ff88] flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <span>(67) 9 9607-8885</span>
                 </a>
               </li>
               <li>
                 <a href="mailto:hamilton@softham.com.br" className="text-white/60 hover:text-[#00ff88] transition-colors text-sm flex items-start gap-3">
-                  <span className="text-[#00ff88]">✉️</span>
+                  <Mail className="w-4 h-4 text-[#00ff88] flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <span>hamilton@softham.com.br</span>
                 </a>
               </li>
               <li className="text-white/40 text-sm flex items-start gap-3">
-                <span className="text-[#00ff88]">📍</span>
+                <MapPin className="w-4 h-4 text-[#00ff88] flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                 <span>Campo Grande, MS<br/>Brasil</span>
               </li>
             </ul>

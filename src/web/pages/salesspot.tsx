@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
 import { trackCTAClick, trackVideoClick, trackTabNavigation } from "../lib/analytics";
+import { Store, Target, TrendingDown, Wallet, Zap } from "lucide-react";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +27,6 @@ const systemData = {
   tagline: "Solução completa para o varejo moderno",
   color: "#ffffff",
   accentColor: "#00ff88",
-  icon: "🏪",
   description: "Sistema voltado para comércio em geral, atendendo às legislações fiscais, com emissor de NFe e NFCe, controle de estoque e financeiro integrados. Uma solução completa para quem busca simplicidade e eficiência na gestão do negócio.",
   features: [
     { title: "PDV Completo", desc: "Ponto de venda intuitivo e rápido, ideal para atendimento ao cliente" },
@@ -43,10 +43,10 @@ const systemData = {
     { title: "Backup Automático", desc: "Seus dados sempre seguros com backup em nuvem" },
   ],
   benefits: [
-    { icon: "🎯", title: "Gestão Simplificada", desc: "Tudo em um único sistema fácil de usar" },
-    { icon: "📉", title: "Menos Perdas", desc: "Controle preciso de estoque e validades" },
-    { icon: "💰", title: "Controle Financeiro", desc: "Saiba exatamente quanto entra e sai" },
-    { icon: "⚡", title: "Atendimento Rápido", desc: "PDV otimizado para agilidade nas vendas" },
+    { IconComponent: Target, title: "Gestão Simplificada", desc: "Tudo em um único sistema fácil de usar" },
+    { IconComponent: TrendingDown, title: "Menos Perdas", desc: "Controle preciso de estoque e validades" },
+    { IconComponent: Wallet, title: "Controle Financeiro", desc: "Saiba exatamente quanto entra e sai" },
+    { IconComponent: Zap, title: "Atendimento Rápido", desc: "PDV otimizado para agilidade nas vendas" },
   ],
   tutorials: [
     { id: 1, title: "Configuração Inicial do Sistema", category: "Primeiros Passos" },
@@ -164,7 +164,7 @@ const HeroSection = () => {
                   {/* PDV Header */}
                   <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
                     <div className="flex items-center gap-2">
-                      <span className="text-xl">🏪</span>
+                      <Store className="w-5 h-5 text-[#00ff88]" strokeWidth={1.5} />
                       <span className="text-white/60 text-xs font-medium">SalesSpot PDV</span>
                     </div>
                     <div className="text-[#00ff88] text-xs font-bold">VENDA #1247</div>
@@ -322,7 +322,7 @@ const BenefitsSection = () => {
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <span className="text-4xl mb-4 block">{benefit.icon}</span>
+                <benefit.IconComponent className="w-10 h-10 text-[#00ff88] mb-4" strokeWidth={1.5} />
                 <h3 className="text-white font-bold mb-2">{benefit.title}</h3>
                 <p className="text-white/40 text-sm">{benefit.desc}</p>
               </div>

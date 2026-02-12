@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar, Breadcrumbs } from "../components/shared";
 import { trackCTAClick, trackVideoClick, trackTabNavigation } from "../lib/analytics";
+import { GraduationCap, Users, FileX, MessageCircle, Wallet, BarChart3, User } from "lucide-react";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,7 +26,6 @@ const systemData = {
   subtitle: "Gestão Escolar",
   tagline: "Transforme a administração da sua escola",
   color: "#FFD700",
-  icon: "🎓",
   description: "Solução completa para gestão escolar desenvolvida para instituições com até 600 alunos. Simplifique o gerenciamento de matrículas, notas, frequência, mensalidades e comunicação com pais. Interface intuitiva que transforma a administração escolar em um processo ágil e eficiente.",
   features: [
     { title: "Gestão de Matrículas", desc: "Cadastro completo de alunos com documentação e histórico escolar" },
@@ -42,10 +42,10 @@ const systemData = {
     { title: "Biblioteca Digital", desc: "Controle de empréstimo de livros e materiais" },
   ],
   benefits: [
-    { icon: "📚", title: "Até 600 Alunos", desc: "Ideal para escolas de pequeno e médio porte" },
-    { icon: "📋", title: "Fim da Papelada", desc: "Tudo digital, organizado e acessível" },
-    { icon: "💬", title: "Comunicação Fácil", desc: "Pais sempre informados sobre seus filhos" },
-    { icon: "💰", title: "Financeiro Integrado", desc: "Controle de mensalidades simplificado" },
+    { IconComponent: Users, title: "Até 600 Alunos", desc: "Ideal para escolas de pequeno e médio porte" },
+    { IconComponent: FileX, title: "Fim da Papelada", desc: "Tudo digital, organizado e acessível" },
+    { IconComponent: MessageCircle, title: "Comunicação Fácil", desc: "Pais sempre informados sobre seus filhos" },
+    { IconComponent: Wallet, title: "Financeiro Integrado", desc: "Controle de mensalidades simplificado" },
   ],
   tutorials: [
     { id: 1, title: "Configuração Inicial da Escola", category: "Primeiros Passos" },
@@ -166,7 +166,9 @@ const HeroSection = () => {
                 <div className="relative w-72 h-48 bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] rounded-xl border border-white/10 shadow-2xl transform -rotate-3">
                   <div className="p-4">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-full bg-[#FFD700]/20 flex items-center justify-center text-lg">👨‍🎓</div>
+                      <div className="w-10 h-10 rounded-full bg-[#FFD700]/20 flex items-center justify-center">
+                        <User className="w-5 h-5 text-[#FFD700]" strokeWidth={1.5} />
+                      </div>
                       <div>
                         <div className="text-white text-sm font-bold">João Silva</div>
                         <div className="text-white/40 text-xs">9º Ano - Turma A</div>
@@ -192,7 +194,10 @@ const HeroSection = () => {
                 {/* Grades card */}
                 <div className="absolute -right-8 top-1/4 w-44 h-32 bg-[#0a0a0a] border border-[#FFD700]/30 rounded-lg shadow-xl transform rotate-6">
                   <div className="p-3">
-                    <div className="text-[#FFD700] text-xs font-bold mb-2">📊 Notas Recentes</div>
+                    <div className="flex items-center gap-1 text-[#FFD700] text-xs font-bold mb-2">
+                      <BarChart3 className="w-3 h-3" strokeWidth={1.5} />
+                      <span>Notas Recentes</span>
+                    </div>
                     <div className="space-y-1.5">
                       <div className="flex justify-between text-[10px]">
                         <span className="text-white/60">Matemática</span>
@@ -338,7 +343,7 @@ const BenefitsSection = () => {
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <span className="text-4xl mb-4 block">{benefit.icon}</span>
+                <benefit.IconComponent className="w-10 h-10 text-[#FFD700] mb-4" strokeWidth={1.5} />
                 <h3 className="text-white font-bold mb-2">{benefit.title}</h3>
                 <p className="text-white/40 text-sm">{benefit.desc}</p>
               </div>
