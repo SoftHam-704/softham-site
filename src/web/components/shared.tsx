@@ -129,7 +129,6 @@ export const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
 
   const menuItems = [
     { label: "HOME", href: "/" },
-    { label: "SISTEMAS", href: "/sistemas" },
     { label: "TUTORIAIS", href: "/tutoriais" },
     { label: "CONTATO", href: "/contato" },
   ];
@@ -269,7 +268,6 @@ export const NavBar = ({ transparent = false }: { transparent?: boolean }) => {
           <div className="hidden md:flex items-center gap-1">
             {[
               { label: "HOME", href: "/" },
-              { label: "SISTEMAS", href: "/sistemas" },
               { label: "TUTORIAIS", href: "/tutoriais" },
               { label: "CONTATO", href: "/contato" },
             ].map((item) => (

@@ -133,7 +133,7 @@ const HeroManifesto = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-20 w-full">
-        <Breadcrumbs items={[{ label: "Sistemas", href: "/sistemas" }, { label: "SalesMasters" }]} />
+        <Breadcrumbs items={[{ label: "SalesMasters" }]} />
         
         <div className="max-w-4xl">
           {/* Badge */}
@@ -815,7 +815,6 @@ const Footer = () => (
         </Link>
         <nav className="flex flex-wrap justify-center gap-6">
           <Link href="/" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Home</Link>
-          <Link href="/sistemas" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Sistemas</Link>
           <Link href="/tutoriais" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Tutoriais</Link>
           <Link href="/contato" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Contato</Link>
         </nav>

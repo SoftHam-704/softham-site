@@ -382,6 +382,7 @@ const services = [
     subtitle: "Representação Comercial",
     description: "Sistema desenvolvido especificamente para profissionais que atuam na área de Representação Comercial voltado para o setor de Autopeças (linha leve, pesada e agrícola).",
     color: "#00ff88",
+    link: "/salesmaster",
   },
   {
     id: "02",
@@ -389,6 +390,7 @@ const services = [
     subtitle: "Documentos Fiscais",
     description: "Ganhe mais tempo para gerir seu negócio. Emissão de MDFe, CTe, NFe e NFCe nunca foram tão simples. Sistema intuitivo e completo.",
     color: "#ff0033",
+    link: "/emissor-fiscal",
   },
   {
     id: "03",
@@ -396,6 +398,7 @@ const services = [
     subtitle: "Comércios",
     description: "Sistema voltado para comércio em geral, atendendo às legislações fiscais, com emissor de NFe e NFCe, controle de estoque e financeiro integrados.",
     color: "#fff",
+    link: "/salesspot",
   },
 ];
 
@@ -459,10 +462,13 @@ const ServicesSection = () => {
                     <p className="text-white/50 mt-4 max-w-xl leading-relaxed">{service.description}</p>
                   </div>
                   <div className="flex justify-end">
-                    <a
-                      href="#contato"
+                    <Link
+                      href={service.link}
                       className="group/btn flex items-center gap-3 px-6 py-3 border transition-all duration-300"
                       style={{ borderColor: hoveredIndex === index ? service.color : "rgba(255,255,255,0.1)" }}
+                      data-category="Sistemas"
+                      data-action-type="click_saiba_mais"
+                      data-product-name={service.title}
                     >
                       <span className="text-white/60 group-hover/btn:text-white text-sm font-bold tracking-wider transition-colors">SAIBA MAIS</span>
                       <span 
@@ -471,7 +477,7 @@ const ServicesSection = () => {
                       >
                         →
                       </span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -1114,16 +1120,15 @@ const ContactSection = () => {
 const Footer = () => {
   const siteLinks = [
     { label: "Home", href: "/", isRoute: true },
-    { label: "Sistemas", href: "/sistemas", isRoute: true },
     { label: "Tutoriais", href: "/tutoriais", isRoute: true },
     { label: "Contato", href: "/contato", isRoute: true },
   ];
 
   const systemLinks = [
-    { label: "SalesMasters", href: "/sistemas" },
-    { label: "Emissor Fiscal", href: "/sistemas" },
-    { label: "SalesSpot", href: "/sistemas" },
-    { label: "Strudent-App", href: "/sistemas" },
+    { label: "SalesMasters", href: "/salesmaster" },
+    { label: "Emissor Fiscal", href: "/emissor-fiscal" },
+    { label: "SalesSpot", href: "/salesspot" },
+    { label: "Strudent-App", href: "/strudent-app" },
   ];
 
   const socialLinks = [

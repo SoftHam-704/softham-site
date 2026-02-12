@@ -92,7 +92,7 @@ const HeroSection = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-20 w-full">
-        <Breadcrumbs items={[{ label: "Sistemas", href: "/sistemas" }, { label: "Emissor Fiscal" }]} />
+        <Breadcrumbs items={[{ label: "Emissor Fiscal" }]} />
         
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className={`transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}>
@@ -618,7 +618,6 @@ const Footer = () => (
         </Link>
         <nav className="flex flex-wrap justify-center gap-6">
           <Link href="/" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Home</Link>
-          <Link href="/sistemas" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Sistemas</Link>
           <Link href="/tutoriais" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Tutoriais</Link>
           <Link href="/contato" className="text-white/40 hover:text-[#00ff88] text-sm transition-colors">Contato</Link>
         </nav>
