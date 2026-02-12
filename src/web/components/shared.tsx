@@ -129,7 +129,6 @@ export const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
 
   const menuItems = [
     { label: "HOME", href: "/" },
-    { label: "SALESMASTERS", href: "/salesmaster", highlight: true },
     { label: "SISTEMAS", href: "/sistemas" },
     { label: "TUTORIAIS", href: "/tutoriais" },
     { label: "CONTATO", href: "/contato" },
@@ -171,7 +170,6 @@ export const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
           <ul className="space-y-2">
             {menuItems.map((item, index) => {
               const isActive = location === item.href;
-              const isHighlight = 'highlight' in item && item.highlight;
               return (
                 <li 
                   key={item.label}
@@ -186,14 +184,11 @@ export const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
                     href={item.href}
                     onClick={onClose}
                     className={`block py-4 text-2xl font-black tracking-wider transition-colors border-b border-white/5 ${
-                      isHighlight 
-                        ? "text-[#00ff88] flex items-center gap-2" 
-                        : isActive 
-                          ? "text-[#00ff88]" 
-                          : "text-white hover:text-[#00ff88]"
+                      isActive 
+                        ? "text-[#00ff88]" 
+                        : "text-white hover:text-[#00ff88]"
                     }`}
                   >
-                    {isHighlight && <span className="text-xs px-2 py-0.5 bg-[#00ff88] text-[#0a0a0a] rounded">★</span>}
                     {item.label}
                   </Link>
                 </li>
@@ -274,31 +269,18 @@ export const NavBar = ({ transparent = false }: { transparent?: boolean }) => {
           <div className="hidden md:flex items-center gap-1">
             {[
               { label: "HOME", href: "/" },
-              { label: "SALESMASTERS", href: "/salesmaster", highlight: true },
               { label: "SISTEMAS", href: "/sistemas" },
               { label: "TUTORIAIS", href: "/tutoriais" },
               { label: "CONTATO", href: "/contato" },
-            ].map((item) => {
-              const isHighlight = 'highlight' in item && item.highlight;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`px-4 py-2 transition-colors text-xs font-bold tracking-widest ${
-                    isHighlight 
-                      ? "text-[#00ff88] hover:text-white flex items-center gap-1.5 relative group" 
-                      : "text-white/60 hover:text-[#00ff88]"
-                  }`}
-                >
-                  {isHighlight && (
-                    <span className="text-[10px] px-1.5 py-0.5 bg-[#00ff88]/20 text-[#00ff88] rounded border border-[#00ff88]/30 group-hover:bg-[#00ff88] group-hover:text-[#0a0a0a] transition-all">
-                      ★
-                    </span>
-                  )}
-                  {item.label}
-                </Link>
-              );
-            })}
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="px-4 py-2 transition-colors text-xs font-bold tracking-widest text-white/60 hover:text-[#00ff88]"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
           <div className="flex items-center gap-3">
