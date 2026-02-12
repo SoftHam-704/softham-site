@@ -26,8 +26,11 @@ export const Analytics = ({ children }: AnalyticsProps) => {
     initGA();
   }, []);
 
-  // Track page views on route changes
+  // Track page views on route changes and scroll to top
   useEffect(() => {
+    // Scroll to top when navigating to a new page
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
     // Small delay to ensure page title has updated
     const timer = setTimeout(() => {
       trackPageView(location, document.title);

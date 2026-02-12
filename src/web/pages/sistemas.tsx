@@ -314,11 +314,15 @@ const ProductCard = ({ product, index }: { product: typeof products[0]; index: n
           <div className="mt-8 pt-6 border-t border-white/5">
             <Link
               href={product.link}
-              onClick={() => trackSaibaMaisClick(product.name)}
+              onClick={(e: React.MouseEvent) => {
+                // Track the click event without blocking navigation
+                trackSaibaMaisClick(product.name);
+                // Ensure navigation happens - wouter's Link handles it
+              }}
               data-category="Sistemas"
               data-action-type="click_saiba_mais"
               data-product-name={product.name}
-              className="inline-flex items-center gap-3 group/btn"
+              className="inline-flex items-center gap-3 group/btn cursor-pointer"
             >
               <span 
                 className="text-xs font-black tracking-widest transition-colors"
