@@ -62,22 +62,6 @@ const pillars = [
   }
 ];
 
-// Tutorial Data
-const tutorials = [
-  { id: 1, title: "Apresentação do Sistema", category: "Primeiros Passos" },
-  { id: 2, title: "Cadastro de Clientes", category: "Primeiros Passos" },
-  { id: 3, title: "Detalhes do Cadastro de Clientes", category: "Primeiros Passos" },
-  { id: 4, title: "Detalhes dos Clientes (relatórios)", category: "Relatórios" },
-  { id: 5, title: "Cadastro de Indústrias", category: "Configurações" },
-  { id: 6, title: "Detalhes da Indústria", category: "Configurações" },
-  { id: 7, title: "Requisitos para Importar Tab. Preços", category: "Configurações" },
-  { id: 8, title: "Importar Tabela de Preços", category: "Configurações" },
-  { id: 9, title: "Digitação dos Pedidos Parte 1", category: "Pedidos" },
-  { id: 10, title: "Digitação Pedidos Parte 2 (via excel)", category: "Pedidos" },
-  { id: 11, title: "Botões na Aba de Conf. do Pedido", category: "Pedidos" },
-  { id: 12, title: "Emissão de Pedidos em Lote", category: "Pedidos" },
-];
-
 const plans = [
   { name: "Starter", price: "197", features: ["1 Usuário", "Até 100 clientes", "5 Representadas", "Suporte por email", "Backup diário"], popular: false },
   { name: "Professional", price: "397", features: ["3 Usuários", "Clientes ilimitados", "Representadas ilimitadas", "Suporte prioritário", "App mobile", "Integração com fábricas"], popular: true },
@@ -504,7 +488,7 @@ const DifferentiatorSection = () => {
   );
 };
 
-// Tutorials Section
+// Tutorials Section - Single Presentation Video
 const TutorialsSection = () => {
   const { ref, isVisible } = useIntersectionObserver();
 
@@ -514,85 +498,101 @@ const TutorialsSection = () => {
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-20">
         <div className={`text-center mb-16 transform transition-all duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
-          <span className="text-[#00ff88] text-xs font-bold tracking-[0.3em] uppercase">// TUTORIAIS EM VÍDEO</span>
+          <span className="text-[#00ff88] text-xs font-bold tracking-[0.3em] uppercase">// VÍDEO DE APRESENTAÇÃO</span>
           <h2 className="text-4xl md:text-5xl font-black text-white mt-4">
-            Aprenda passo a passo
+            Conheça o SalesMasters
           </h2>
           <p className="text-white/50 mt-4 max-w-2xl mx-auto">
-            Tutoriais completos para você dominar todas as funcionalidades do SalesMasters
+            Descubra como o sistema pode revolucionar sua representação comercial
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tutorials.map((tutorial, index) => (
-            <a
-              key={tutorial.id}
-              href="https://www.youtube.com/@softham"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackVideoClick("SalesMasters", tutorial.title)}
-              className={`group relative overflow-hidden border border-white/5 hover:border-[#00ff88]/30 transition-all duration-500 transform ${
-                isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-              }`}
-              style={{ transitionDelay: `${index * 50}ms` }}
-            >
+        {/* Single Centered Video Card */}
+        <div className="flex justify-center">
+          <a
+            href="https://www.youtube.com/@softham"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackVideoClick("SalesMasters", "Apresentação do SalesMasters")}
+            className={`group relative overflow-hidden border-2 border-white/10 hover:border-[#00ff88]/50 transition-all duration-500 transform max-w-3xl w-full ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+            }`}
+          >
+            {/* Neon glow effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#00ff88]/20 via-transparent to-[#ff0033]/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
+            
+            <div className="relative bg-[#0a0a0a]">
               {/* Thumbnail */}
               <div className="relative aspect-video bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#00ff88]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#00ff88]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
-                {/* Fake screenshot overlay */}
-                <div className="absolute inset-4 border border-white/10 rounded bg-[#0f0f0f]/80">
-                  <div className="h-4 bg-white/5 flex items-center px-2 gap-1">
-                    <div className="w-2 h-2 rounded-full bg-[#ff5f57]" />
-                    <div className="w-2 h-2 rounded-full bg-[#febc2e]" />
-                    <div className="w-2 h-2 rounded-full bg-[#28c840]" />
+                {/* Fake screenshot overlay - larger version */}
+                <div className="absolute inset-6 md:inset-10 border border-white/10 rounded-lg bg-[#0f0f0f]/80 shadow-2xl">
+                  <div className="h-6 md:h-8 bg-white/5 flex items-center px-3 gap-1.5 border-b border-white/5">
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#ff5f57]" />
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#febc2e]" />
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#28c840]" />
+                    <span className="ml-4 text-white/30 text-xs hidden md:block">SalesMasters - Representação Comercial</span>
                   </div>
-                  <div className="p-2 space-y-1">
-                    <div className="h-1.5 w-3/4 bg-white/10 rounded" />
-                    <div className="h-1.5 w-1/2 bg-[#00ff88]/20 rounded" />
-                    <div className="h-1.5 w-2/3 bg-white/5 rounded" />
+                  <div className="p-4 space-y-2">
+                    <div className="h-2 w-3/4 bg-white/10 rounded" />
+                    <div className="h-2 w-1/2 bg-[#00ff88]/30 rounded" />
+                    <div className="h-2 w-2/3 bg-white/5 rounded" />
+                    <div className="grid grid-cols-3 gap-2 mt-4">
+                      <div className="h-8 bg-white/5 rounded" />
+                      <div className="h-8 bg-[#00ff88]/10 rounded" />
+                      <div className="h-8 bg-white/5 rounded" />
+                    </div>
                   </div>
                 </div>
 
-                {/* Play button */}
+                {/* Play button - larger */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-[#ff0000] flex items-center justify-center transform group-hover:scale-110 transition-transform shadow-lg">
-                    <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#ff0000] flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-2xl shadow-[#ff0000]/30">
+                    <svg className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z"/>
                     </svg>
                   </div>
                 </div>
 
-                {/* Category badge */}
-                <div className="absolute top-3 left-3 px-2 py-1 bg-[#0a0a0a]/80 backdrop-blur-sm text-[10px] font-bold text-[#00ff88] tracking-wider">
-                  {tutorial.category}
+                {/* Featured badge */}
+                <div className="absolute top-4 left-4 md:top-6 md:left-6 px-3 py-1.5 bg-[#00ff88] text-[#0a0a0a] text-xs font-black tracking-wider">
+                  VÍDEO OFICIAL
                 </div>
               </div>
 
-              {/* Title */}
-              <div className="p-4 bg-[#0f0f0f]">
-                <h3 className="text-white font-bold text-sm group-hover:text-[#00ff88] transition-colors line-clamp-2">
-                  {tutorial.title}
+              {/* Title and Description */}
+              <div className="p-6 md:p-8 bg-gradient-to-b from-[#0f0f0f] to-[#0a0a0a]">
+                <h3 className="text-white font-black text-xl md:text-2xl group-hover:text-[#00ff88] transition-colors">
+                  Apresentação do SalesMasters
                 </h3>
-                <p className="text-white/30 text-xs mt-2">SoftHam Sistemas</p>
+                <p className="text-white/50 mt-3 text-sm md:text-base leading-relaxed">
+                  Conheça as principais funcionalidades e como o sistema pode transformar sua representação comercial. 
+                  Veja na prática como otimizar seus processos e aumentar suas vendas.
+                </p>
+                <div className="flex items-center gap-4 mt-4">
+                  <div className="flex items-center gap-2 text-white/40 text-sm">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    SoftHam Sistemas
+                  </div>
+                </div>
               </div>
-            </a>
-          ))}
+            </div>
+          </a>
         </div>
 
-        {/* YouTube CTA */}
-        <div className={`text-center mt-12 transform transition-all duration-700 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
-          <a
-            href="https://www.youtube.com/@softham"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-[#ff0000] text-white font-bold text-sm tracking-wider hover:bg-[#cc0000] transition-colors"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        {/* Info about more tutorials */}
+        <div className={`text-center mt-12 transform transition-all duration-700 delay-300 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-full">
+            <svg className="w-5 h-5 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            VER TODOS OS TUTORIAIS NO YOUTUBE
-          </a>
+            <span className="text-white/60 text-sm">
+              Tutoriais detalhados disponíveis na <span className="text-[#00ff88] font-semibold">área restrita do sistema</span>
+            </span>
+          </div>
         </div>
       </div>
     </section>
