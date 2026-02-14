@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { FloatingWhatsApp, CustomCursor, NavBar as SharedNavBar, MobileMenu } from "../components/shared";
 import { trackCTAClick } from "../lib/analytics";
 import { Target, Eye, Gem, MapPin, Atom, Cog, Database, Brain, Check, Mail, Phone, Trophy, Users, Flag, RefreshCw, Lock, DollarSign } from "lucide-react";
+import { HeroAnimations, PeriodicGlitch, TerminalCursor } from "../components/TechAnimations";
 
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -58,7 +59,7 @@ const Counter = ({ target, suffix = "" }: { target: number; suffix?: string }) =
 
 // NavBar is now imported from shared components
 
-// Hero with split diagonal and code background
+// Hero with split diagonal, code background and tech animations
 const HeroSection = () => {
   const [textIndex, setTextIndex] = useState(0);
   const dynamicTexts = ["INOVAÇÃO", "SOLUÇÕES", "TECNOLOGIA", "CONFIANÇA"];
@@ -72,8 +73,11 @@ const HeroSection = () => {
 
   return (
     <section id="home" className="relative min-h-screen overflow-hidden bg-[#0a0a0a]">
+      {/* Tech Animations Layer */}
+      <HeroAnimations />
+      
       {/* Code background */}
-      <div className="absolute inset-0 opacity-[0.03] font-mono text-[10px] leading-tight overflow-hidden select-none pointer-events-none">
+      <div className="absolute inset-0 opacity-[0.03] font-mono text-[10px] leading-tight overflow-hidden select-none pointer-events-none z-[2]">
         <div className="animate-scroll-code whitespace-pre">
           {Array(50).fill(null).map((_, i) => (
             <div key={i} className="text-white/50">
@@ -87,13 +91,13 @@ const HeroSection = () => {
       </div>
 
       {/* Diagonal split */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 z-[3]">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#0a0a0a] to-transparent" style={{ clipPath: "polygon(0 0, 70% 0, 40% 100%, 0 100%)" }} />
         <div className="absolute top-0 right-0 w-1/2 h-full bg-[#00ff88]/5" style={{ clipPath: "polygon(50% 0, 100% 0, 100% 100%, 20% 100%)" }} />
       </div>
 
       {/* Giant 30 */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 text-[40vw] font-black text-white/[0.02] leading-none select-none pointer-events-none">
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 text-[40vw] font-black text-white/[0.02] leading-none select-none pointer-events-none z-[4]">
         30
       </div>
 
@@ -109,8 +113,10 @@ const HeroSection = () => {
                 </div>
                 
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.85] tracking-tighter">
-                  <span className="text-white">SOFT</span><span className="text-[#00ff88]">HAM</span>
-                  <span className="text-white/30 text-3xl md:text-4xl font-light tracking-normal block mt-4">SISTEMAS</span>
+                  <PeriodicGlitch className="text-white">SOFT</PeriodicGlitch><PeriodicGlitch className="text-[#00ff88]">HAM</PeriodicGlitch>
+                  <span className="text-white/30 text-3xl md:text-4xl font-light tracking-normal block mt-4">
+                    SISTEMAS<TerminalCursor className="align-middle" />
+                  </span>
                 </h1>
               </div>
 
@@ -159,7 +165,7 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
         <span className="text-white/30 text-[10px] tracking-[0.3em] font-bold">SCROLL</span>
         <div className="w-px h-12 bg-gradient-to-b from-[#00ff88] to-transparent animate-pulse" />
       </div>
