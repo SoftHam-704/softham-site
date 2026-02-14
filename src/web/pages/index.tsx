@@ -113,7 +113,7 @@ const HeroSection = () => {
                 </div>
                 
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.85] tracking-tighter">
-                  <PeriodicGlitch className="text-white">SOFT</PeriodicGlitch><PeriodicGlitch className="text-[#00ff88]">HAM</PeriodicGlitch>
+                  <PeriodicGlitch className="text-white">SOFT</PeriodicGlitch><PeriodicGlitch className="text-[#ff0033]">HAM</PeriodicGlitch>
                   <span className="text-white/30 text-3xl md:text-4xl font-light tracking-normal block mt-4">
                     SISTEMAS<TerminalCursor className="align-middle" />
                   </span>
